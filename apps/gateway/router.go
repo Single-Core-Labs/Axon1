@@ -4,6 +4,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/google/uuid"
@@ -22,11 +23,11 @@ func NewRouter(cfg *Config, tracer *Tracer) *Router {
 		tracer:    tracer,
 	}
 
-	// Initialize providers (normally with env vars)
-	r.providers["openai"] = NewOpenAIProvider("sk-mock")
-	r.providers["anthropic"] = NewAnthropicProvider("sk-mock")
-	r.providers["gemini"] = NewGeminiProvider("sk-mock")
-	r.providers["mistral"] = NewMistralProvider("sk-mock")
+	// Initialize providers from environment variables
+	r.providers["openai"] = NewOpenAIProvider(os.Getenv("OPENAI_API_KEY"))
+	r.providers["anthropic"] = NewAnthropicProvider(os.Getenv("ANTHROPIC_API_KEY"))
+	r.providers["gemini"] = NewGeminiProvider(os.Getenv("GEMINI_API_KEY"))
+	r.providers["mistral"] = NewMistralProvider(os.Getenv("MISTRAL_API_KEY"))
 
 	return r
 }

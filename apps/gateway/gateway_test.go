@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
@@ -26,12 +27,24 @@ func TestHealthCheck(t *testing.T) {
 }
 
 func TestRouterFallback(t *testing.T) {
+	// Mock OpenAI server
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`{"choices":[{"message":{"content":"hello response"}}]}`))
+	}))
+	defer server.Close()
+
 	cfg := &Config{}
 	cfg.Strategies.Fallback = []StrategyConfig{
 		{Provider: "openai", Model: "gpt-4"},
 	}
 	
 	r := NewRouter(cfg, nil)
+	// Override the OpenAI provider's baseURL to point to our mock server
+	if p, ok := r.providers["openai"].(*OpenAIProvider); ok {
+		p.baseURL = server.URL
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	
