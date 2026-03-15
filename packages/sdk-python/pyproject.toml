@@ -9,6 +9,18 @@ description = "1Core Labs Axon Python SDK"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
+authors = [{ name = "1Core Labs", email = "contact@1core.io" }]
+keywords = ["axon", "ai", "gateway", "observability", "llm"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/Single-Core-Labs/Axon1"
+Repository = "https://github.com/Single-Core-Labs/Axon1"
+Issues = "https://github.com/Single-Core-Labs/Axon1/issues"
 dependencies = [
     "httpx>=0.24.0",
     "pydantic>=2.0.0"

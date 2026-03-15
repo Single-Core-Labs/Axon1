@@ -1,6 +1,26 @@
 {
   "name": "@1corelabs/axon",
   "version": "0.1.0",
+  "author": "1Core Labs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Single-Core-Labs/Axon1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Single-Core-Labs/Axon1/issues"
+  },
+  "homepage": "https://github.com/Single-Core-Labs/Axon1#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "axon",
+    "ai",
+    "gateway",
+    "observability",
+    "llm"
+  ],
   "description": "1Core Labs Axon TypeScript SDK",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
