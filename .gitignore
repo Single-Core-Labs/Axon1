@@ -1,0 +1,15 @@
+node_modules
+dist
+.next
+.turbo
+.env
+coverage
+__pycache__
+*.pyc
+.pytest_cache
+*.egg-info
+.venv
+venv/
+bin/
+build/
+*.exe
