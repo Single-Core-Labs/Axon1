@@ -1,0 +1,16 @@
+# Testing and local dev files
+tests/
+.env
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Distribution files (if using setuptools)
+build/
+dist/
+*.egg-info/
+
+# Ignore local virtual environments
+.venv/
+env/
+venv/

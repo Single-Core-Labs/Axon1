@@ -1,0 +1,16 @@
+# Exclude source code and config from the package
+src/
+tsconfig.json
+vitest.config.ts
+
+# Exclude dev tools
+node_modules/
+.venv/
+.pytest_cache/
+__pycache__/
+
+# Allow only dist and essential files
+!dist/
+!package.json
+!README.md
+!LICENSE
