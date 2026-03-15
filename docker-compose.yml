@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - clickhouse
+      - redis
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - API_PORT=8081
+      - DATABASE_URL=postgres://axon:axon@postgres:5432/axon?sslmode=disable
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - REDIS_URL=redis://redis:6379/0
+      - JWT_SECRET=supersecret
+    depends_on:
+      - postgres
+      - clickhouse
+      - redis
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8081
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=axon
+      - POSTGRES_PASSWORD=axon
+      - POSTGRES_DB=axon
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24-alpine
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  clickhouse_data:
+  redis_data:
